@@ -5,6 +5,7 @@ import de.sergio.TravelPlanner.dto.TripResponse;
 import de.sergio.TravelPlanner.entity.Trip;
 import de.sergio.TravelPlanner.mapper.TripMapper;
 import de.sergio.TravelPlanner.service.TripService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,14 +40,14 @@ public class TripController {
 
     // POST /api/trips/
     @PostMapping
-    public TripResponse createTrip(@RequestBody TripRequest request) {
+    public TripResponse createTrip(@Valid @RequestBody TripRequest request) {
         Trip trip = tripMapper.toEntity(request);
         return tripMapper.toResponse(tripService.createTrip(trip));
     }
 
     // PUT /api/trip/{id}
     @PutMapping("/{id}")
-    public TripResponse updateTrip(@PathVariable Long id, @RequestBody TripRequest request) {
+    public TripResponse updateTrip(@PathVariable Long id,@Valid @RequestBody TripRequest request) {
         Trip trip = tripMapper.toEntity(request);
         Trip updated = tripService.updateTrip(id, trip);
         return tripMapper.toResponse(updated);

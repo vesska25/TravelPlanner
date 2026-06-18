@@ -1,6 +1,8 @@
 package de.sergio.TravelPlanner.service;
 
 import de.sergio.TravelPlanner.entity.Trip;
+import de.sergio.TravelPlanner.exception.ResourceNotFoundException;
+import de.sergio.TravelPlanner.exception.ValidationException;
 import de.sergio.TravelPlanner.repository.TripRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class TripService {
 
     public Trip getTripById(Long id) {
         return tripRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Trip with id " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Trip with id " + id + " not found"));
     }
 
     // CREATE
@@ -34,7 +36,7 @@ public class TripService {
 
     private void validateDates(Trip trip) {
         if (trip.getStartDate().isAfter(trip.getEndDate())) {
-            throw new RuntimeException("startDate must be before or equal to endDate");
+            throw new ValidationException("startDate must be before or equal to endDate");
         }
     }
 
@@ -60,7 +62,7 @@ public class TripService {
 
     public void deleteTrip(Long id) {
         if (!tripRepository.existsById(id)) {
-            throw new RuntimeException("Trip with id " + id + " not found");
+            throw new ResourceNotFoundException("Trip with id " + id + " not found");
         }
         tripRepository.deleteById(id);
     }

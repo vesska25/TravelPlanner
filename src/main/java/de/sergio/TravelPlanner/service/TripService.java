@@ -20,7 +20,7 @@ public class TripService {
 
     // READ
     public List<Trip> getAllTrips() {
-        return tripRepository.findAll();
+        return tripRepository.findAllByOrderByStartDateAsc();
     }
 
     public Trip getTripById(Long id) {
@@ -59,7 +59,6 @@ public class TripService {
     }
 
     // DELETE
-
     public void deleteTrip(Long id) {
         if (!tripRepository.existsById(id)) {
             throw new ResourceNotFoundException("Trip with id " + id + " not found");

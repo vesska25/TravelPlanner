@@ -1,10 +1,13 @@
 package de.sergio.TravelPlanner.service;
 
+import de.sergio.TravelPlanner.dto.LoginRequest;
+import de.sergio.TravelPlanner.dto.LoginResponse;
 import de.sergio.TravelPlanner.dto.RegisterRequest;
 import de.sergio.TravelPlanner.dto.RegisterResponse;
 import de.sergio.TravelPlanner.entity.User;
 import de.sergio.TravelPlanner.entity.enums.Role;
 import de.sergio.TravelPlanner.exception.EmailAlreadyExistsException;
+import de.sergio.TravelPlanner.exception.InvalidCredentialsException;
 import de.sergio.TravelPlanner.exception.ValidationException;
 import de.sergio.TravelPlanner.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +22,8 @@ import java.util.Objects;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder; // бин с Этапа B
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public RegisterResponse register(RegisterRequest request) {
 
@@ -44,5 +48,17 @@ public class AuthService {
                 savedUser.getEmail(),
                 savedUser.getRole()
         );
+    }
+
+    public LoginResponse login(LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new InvalidCredentialsException("Incorrect email or password"));
+
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
+            throw new InvalidCredentialsException("Incorrect email or password");
+        }
+
+        return new LoginResponse(jwtService.generateToken(user));
     }
 }

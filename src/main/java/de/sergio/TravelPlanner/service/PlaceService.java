@@ -4,7 +4,6 @@ import de.sergio.TravelPlanner.entity.Place;
 import de.sergio.TravelPlanner.entity.Trip;
 import de.sergio.TravelPlanner.exception.ResourceNotFoundException;
 import de.sergio.TravelPlanner.repository.PlaceRepository;
-import de.sergio.TravelPlanner.repository.TripRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,32 +12,40 @@ import java.util.List;
 public class PlaceService {
 
     private final PlaceRepository placeRepository;
-    private final TripRepository tripRepository;
+    private final TripService tripService;   // delegate ownership checks here
 
-    public PlaceService(PlaceRepository placeRepository, TripRepository tripRepository) {
+    public PlaceService(PlaceRepository placeRepository, TripService tripService) {
         this.placeRepository = placeRepository;
-        this.tripRepository = tripRepository;
+        this.tripService = tripService;
     }
 
+    // Reading places goes through the trip: if the trip is yours, its places are yours.
     public List<Place> getPlacesByTripId(Long tripId) {
+        tripService.getOwnedTripOrThrow(tripId);   // throws 404 if the trip isn't yours
         return placeRepository.findByTripId(tripId);
     }
 
-
-    public Place getPlaceById(Long id) {
-        return placeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Place with id " + id + " not found"));
-    }
-
     public Place createPlace(Long tripId, Place place) {
-        Trip trip = tripRepository.findById(tripId)
-                .orElseThrow(() -> new ResourceNotFoundException("Trip with id " + tripId + " not found"));
+        Trip trip = tripService.getOwnedTripOrThrow(tripId);   // fetches AND checks ownership
         place.setTrip(trip);
         return placeRepository.save(place);
     }
 
+    // Fetch a place and verify its parent trip belongs to the current user.
+    private Place getOwnedPlaceOrThrow(Long placeId) {
+        Place place = placeRepository.findById(placeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Place not found"));
+        // Ownership lives on the trip — delegate the check to TripService.
+        tripService.getOwnedTripOrThrow(place.getTrip().getId());   // throws 404 if not yours
+        return place;
+    }
+
+    public Place getPlaceById(Long id) {
+        return getOwnedPlaceOrThrow(id);
+    }
+
     public Place updatePlace(Long id, Place place) {
-        Place existing = getPlaceById(id);
+        Place existing = getOwnedPlaceOrThrow(id);
 
         existing.setName(place.getName());
         existing.setCity(place.getCity());
@@ -52,11 +59,7 @@ public class PlaceService {
     }
 
     public void deletePlace(Long id) {
-
-        if(!placeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Place with id " + id + " not found");
-        }
-
-        placeRepository.deleteById(id);
+        Place place = getOwnedPlaceOrThrow(id);
+        placeRepository.delete(place);
     }
 }

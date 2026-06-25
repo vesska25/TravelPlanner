@@ -1,5 +1,6 @@
 package de.sergio.TravelPlanner.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.sergio.TravelPlanner.entity.enums.Currency;
 import de.sergio.TravelPlanner.entity.enums.TripStatus;
 import jakarta.persistence.*;
@@ -45,5 +46,10 @@ public class Trip {
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Place> places = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
 
 }

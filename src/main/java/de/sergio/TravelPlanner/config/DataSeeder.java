@@ -7,12 +7,11 @@ import de.sergio.TravelPlanner.entity.enums.PlaceCategory;
 import de.sergio.TravelPlanner.entity.enums.TripStatus;
 import de.sergio.TravelPlanner.repository.TripRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Component
+//@Component
 public class DataSeeder implements CommandLineRunner {
 
     private final TripRepository tripRepository;

@@ -1,9 +1,6 @@
 package de.sergio.TravelPlanner.service;
 
-import de.sergio.TravelPlanner.dto.LoginRequest;
-import de.sergio.TravelPlanner.dto.LoginResponse;
-import de.sergio.TravelPlanner.dto.RegisterRequest;
-import de.sergio.TravelPlanner.dto.RegisterResponse;
+import de.sergio.TravelPlanner.dto.*;
 import de.sergio.TravelPlanner.entity.User;
 import de.sergio.TravelPlanner.entity.enums.Role;
 import de.sergio.TravelPlanner.exception.EmailAlreadyExistsException;
@@ -14,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -60,5 +58,11 @@ public class AuthService {
         }
 
         return new LoginResponse(jwtService.generateToken(user));
+    }
+
+
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserResponse(user.getId(), user.getEmail(), user.getRole())).toList();
     }
 }

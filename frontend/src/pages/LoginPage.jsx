@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
     // state for the two input fields
@@ -56,6 +57,9 @@ function LoginPage() {
                     />
                 </div>
                 <button type="submit">Log in</button>
+                <p>
+                    No account? <Link to="/register">Register</Link>
+                </p>
             </form>
         </div>
     );

@@ -3,6 +3,7 @@ import LoginPage from "./pages/LoginPage";
 import TripsPage from "./pages/TripsPage";
 import ProtectedRoute from "./ProtectedRoute";
 import NewTripPage from "./pages/NewTripPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                     </ProtectedRoute>
                 }
             />
+            <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
   );

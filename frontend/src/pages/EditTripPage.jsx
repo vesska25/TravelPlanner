@@ -72,52 +72,116 @@ function EditTripPage() {
     }
 
     return (
-        <div>
-            <h1>Edit Trip</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Name</label>
-                    <input name="name" value={form.name} onChange={handleChange} />
-                </div>
-                <div>
-                    <label>Country</label>
-                    <input name="country" value={form.country} onChange={handleChange} />
-                </div>
-                <div>
-                    <label>Start date</label>
-                    <input type="date" name="startDate" value={form.startDate} onChange={handleChange} />
-                </div>
-                <div>
-                    <label>End date</label>
-                    <input type="date" name="endDate" value={form.endDate} onChange={handleChange} />
-                </div>
-                <div>
-                    <label>Budget</label>
-                    <input type="number" name="budget" value={form.budget} onChange={handleChange} />
-                </div>
-                <div>
-                    <label>Currency</label>
-                    <select name="currency" value={form.currency} onChange={handleChange}>
-                        <option value="EUR">EUR</option>
-                        <option value="USD">USD</option>
-                        <option value="GBP">GBP</option>
-                        <option value="CHF">CHF</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Status</label>
-                    <select name="status" value={form.status} onChange={handleChange}>
-                        <option value="PLANNED">PLANNED</option>
-                        <option value="ONGOING">ONGOING</option>
-                        <option value="COMPLETED">COMPLETED</option>
-                    </select>
-                </div>
-                <div>
-                    <label>Description</label>
-                    <textarea name="description" value={form.description} onChange={handleChange} />
-                </div>
-                <button type="submit">Save changes</button>
-            </form>
+        <div className="min-h-screen bg-zinc-900 px-6 py-8">
+            <div className="max-w-2xl mx-auto">
+                <h1 className="text-2xl font-bold text-zinc-100 mb-6">Edit Trip</h1>
+
+                <form
+                    onSubmit={handleSubmit}
+                    className="bg-zinc-800 border border-zinc-700 rounded-xl p-6 flex flex-col gap-4"
+                >
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium text-zinc-300">Name</label>
+                        <input
+                            name="name"
+                            value={form.name}
+                            onChange={handleChange}
+                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium text-zinc-300">Country</label>
+                        <input
+                            name="country"
+                            value={form.country}
+                            onChange={handleChange}
+                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        />
+                    </div>
+
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-1 flex-1">
+                            <label className="text-sm font-medium text-zinc-300">Start date</label>
+                            <input
+                                type="date"
+                                name="startDate"
+                                value={form.startDate}
+                                onChange={handleChange}
+                                className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1 flex-1">
+                            <label className="text-sm font-medium text-zinc-300">End date</label>
+                            <input
+                                type="date"
+                                name="endDate"
+                                value={form.endDate}
+                                onChange={handleChange}
+                                className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                        <div className="flex flex-col gap-1 flex-1">
+                            <label className="text-sm font-medium text-zinc-300">Budget</label>
+                            <input
+                                type="number"
+                                name="budget"
+                                value={form.budget}
+                                onChange={handleChange}
+                                className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1 flex-1">
+                            <label className="text-sm font-medium text-zinc-300">Currency</label>
+                            <select
+                                name="currency"
+                                value={form.currency}
+                                onChange={handleChange}
+                                className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                            >
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="GBP">GBP</option>
+                                <option value="CHF">CHF</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium text-zinc-300">Status</label>
+                        <select
+                            name="status"
+                            value={form.status}
+                            onChange={handleChange}
+                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        >
+                            <option value="PLANNED">PLANNED</option>
+                            <option value="ONGOING">ONGOING</option>
+                            <option value="COMPLETED">COMPLETED</option>
+                        </select>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium text-zinc-300">Description</label>
+                        <textarea
+                            name="description"
+                            value={form.description}
+                            onChange={handleChange}
+                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="bg-zinc-100 hover:bg-white text-zinc-900 font-medium rounded-lg py-2 mt-2 self-start px-6 transition-colors"
+                    >
+                        Save changes
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }

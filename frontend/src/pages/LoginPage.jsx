@@ -37,30 +37,48 @@ function LoginPage() {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button type="submit">Log in</button>
-                <p>
-                    No account? <Link to="/register">Register</Link>
+        <div className="min-h-screen flex items-center justify-center bg-zinc-900">
+            <div className="w-full max-w-md bg-zinc-800 rounded-xl shadow-lg p-8 border border-zinc-700">
+                <h1 className="text-2xl font-bold text-zinc-100 mb-6 text-center">
+                    Log in
+                </h1>
+
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium text-zinc-300">Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm font-medium text-zinc-300">Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="bg-zinc-100 hover:bg-white text-zinc-900 font-medium rounded-lg py-2 mt-2 transition-colors"
+                    >
+                        Log in
+                    </button>
+                </form>
+
+                <p className="text-sm text-zinc-400 text-center mt-6">
+                    No account?{" "}
+                    <Link to="/register" className="text-zinc-200 hover:underline">
+                        Register
+                    </Link>
                 </p>
-            </form>
+            </div>
         </div>
     );
 }

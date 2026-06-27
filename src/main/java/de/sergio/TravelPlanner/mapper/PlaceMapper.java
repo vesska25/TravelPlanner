@@ -32,7 +32,7 @@ public class PlaceMapper {
         place.setCity(request.city());
         place.setCategory(request.category());
         place.setNotes(request.notes());
-        place.setVisited(request.visited());
+        place.setVisited(request.visited() != null ? request.visited() : false);
         place.setLatitude(request.latitude());
         place.setLongitude(request.longitude());
 

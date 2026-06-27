@@ -17,7 +17,7 @@ public record PlaceRequest(
         @Size(max = 500)
         String notes,
 
-        boolean visited,
+        Boolean visited,
 
         @DecimalMin("-90")
         @DecimalMax("90")

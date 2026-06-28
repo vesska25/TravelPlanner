@@ -10,45 +10,45 @@ import TripDetailPage from "./pages/TripDetailPage";
 
 function App() {
   return (
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-            <Route
-                path="/trips"
-                element={
-                    <ProtectedRoute>
-                        <TripsPage />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/trips/:id/edit"
-                element={
-                    <ProtectedRoute>
-                        <EditTripPage />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/trips/new"
-                element={
-                    <ProtectedRoute>
-                        <NewTripPage />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/trips/:id"
-                element={
-                    <ProtectedRoute>
-                        <TripDetailPage />
-                    </ProtectedRoute>
-                }
-            />
-            <Route path="/register" element={<RegisterPage />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/trips"
+          element={
+            <ProtectedRoute>
+              <TripsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trips/:id/edit"
+          element={
+            <ProtectedRoute>
+              <EditTripPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trips/new"
+          element={
+            <ProtectedRoute>
+              <NewTripPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trips/:id"
+          element={
+            <ProtectedRoute>
+              <TripDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/register" element={<RegisterPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

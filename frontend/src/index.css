@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: "Hanken Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: #f5f9fb;
+  color: #143642;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display face for headings / wordmark */
+.font-display {
+  font-family: "Schibsted Grotesk", "Hanken Grotesk", sans-serif;
+}
+
+/* Phosphor baseline */
+.ph,
+.ph-bold,
+.ph-fill {
+  line-height: 1;
+}

@@ -1,86 +1,113 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
+import { inputCls, labelCls, primaryBtn } from "../lib/trip";
 
 function LoginPage() {
-    // state for the two input fields
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate(); // gives us a function to redirect programmatically
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-    // called when the form is submitted
-    // note the "async" keyword — required to use "await" inside
-    async function handleSubmit(event) {
-        event.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-        try {
-            const response = await fetch("http://localhost:8080/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password }),
-            });
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-            if (!response.ok) {
-                // backend returned 401 (or 403) — login failed
-                const errorData = await response.json();
-                console.error("Login failed:", errorData.message);
-                return;
-            }
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Login failed:", errorData.message);
+        return;
+      }
 
-            const data = await response.json();
-            localStorage.setItem("token", data.token); // persist the JWT
-            navigate("/trips"); // redirect to the trips page
-        } catch (error) {
-            // network-level failure (backend down, CORS, no connection)
-            console.error("Request failed:", error);
-        }
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      navigate("/trips");
+    } catch (error) {
+      console.error("Request failed:", error);
     }
+  }
 
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-zinc-900">
-            <div className="w-full max-w-md bg-zinc-800 rounded-xl shadow-lg p-8 border border-zinc-700">
-                <h1 className="text-2xl font-bold text-zinc-100 mb-6 text-center">
-                    Log in
-                </h1>
-
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-1">
-                        <label className="text-sm font-medium text-zinc-300">Email</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
-                        />
-                    </div>
-
-                    <div className="flex flex-col gap-1">
-                        <label className="text-sm font-medium text-zinc-300">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="bg-zinc-100 hover:bg-white text-zinc-900 font-medium rounded-lg py-2 mt-2 transition-colors"
-                    >
-                        Log in
-                    </button>
-                </form>
-
-                <p className="text-sm text-zinc-400 text-center mt-6">
-                    No account?{" "}
-                    <Link to="/register" className="text-zinc-200 hover:underline">
-                        Register
-                    </Link>
-                </p>
-            </div>
+  return (
+    <div className="min-h-screen flex">
+      {/* brand panel */}
+      <div
+        className="hidden md:flex flex-[1.1] relative flex-col justify-between p-12 text-white overflow-hidden"
+        style={{ background: "linear-gradient(150deg,#1f6f86 0%,#2f93ab 46%,#e8d9b5 100%)" }}
+      >
+        <div className="absolute inset-0 flex items-center justify-center text-white/10 text-[260px]">
+          <i className="ph ph-compass" />
         </div>
-    );
+        <div className="relative flex items-center gap-2.5">
+          <span className="w-[34px] h-[34px] rounded-[10px] bg-white/20 flex items-center justify-center text-lg">
+            <i className="ph-fill ph-compass" />
+          </span>
+          <span className="font-display font-bold text-lg">Travel Planner</span>
+        </div>
+        <div className="relative">
+          <h2 className="font-display text-[38px] font-extrabold tracking-tight leading-[1.1] mb-3.5 max-w-[440px]">
+            Every journey starts with a plan.
+          </h2>
+          <p className="text-base leading-relaxed max-w-[380px] opacity-90">
+            Map your trips, collect the places you love, and keep every detail in
+            one calm, bright place.
+          </p>
+        </div>
+        <span className="relative font-mono text-[11px] tracking-[0.2em] opacity-70">
+          TRAVEL PLANNER
+        </span>
+      </div>
+
+      {/* form panel */}
+      <div className="flex-1 flex items-center justify-center p-10 bg-[#f5f9fb]">
+        <div className="w-full max-w-[360px]">
+          <h1 className="font-display text-[28px] font-extrabold tracking-tight mb-1.5">
+            Welcome back
+          </h1>
+          <p className="text-[#5b7785] text-[15px] mb-7">
+            Log in to keep planning your trips.
+          </p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className={labelCls}>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className={inputCls}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className={labelCls}>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className={inputCls}
+              />
+            </div>
+            <button type="submit" className={`${primaryBtn} w-full mt-1`}>
+              Log in
+            </button>
+          </form>
+
+          <p className="text-center text-[#5b7785] text-sm mt-6">
+            No account yet?{" "}
+            <Link to="/register" className="text-[#1f6f86] font-semibold hover:underline">
+              Create one
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default LoginPage;

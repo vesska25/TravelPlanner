@@ -4,18 +4,25 @@ import { useNavigate, Link } from "react-router-dom";
 
 function TripsPage() {
     const [trips, setTrips] = useState([]); // start with an empty list
+    const [loading, setLoading] = useState(true); // true until the first load finishes
     const navigate = useNavigate();
 
     // runs once, after the component first appears on screen
     useEffect(() => {
         async function loadTrips() {
-            const response = await apiFetch("/api/trips");
-            const data = await response.json();
-            setTrips(data); // store the fetched trips in state
+            try {
+                const response = await apiFetch("/api/trips");
+                const data = await response.json();
+                setTrips(data);
+            } catch (error) {
+                console.error("Failed to load trips:", error);
+            } finally {
+                setLoading(false); // stop loading no matter what
+            }
         }
 
         loadTrips();
-    }, []); // empty array = run only once
+    }, []);
 
     async function handleDelete(id) {
         // ask for confirmation before an irreversible action
@@ -54,7 +61,9 @@ function TripsPage() {
                     </button>
                 </div>
 
-                {trips.length === 0 ? (
+                {loading ? (
+                    <p className="text-zinc-400">Loading trips...</p>
+                ) : trips.length === 0 ? (
                     <p className="text-zinc-400">No trips yet. Create your first one!</p>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

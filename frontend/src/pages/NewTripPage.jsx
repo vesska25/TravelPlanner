@@ -17,6 +17,8 @@ function NewTripPage() {
         description: "",
     });
 
+    const [error, setError] = useState("");
+
     // one generic handler for every field
     // it reads the field's "name" attribute and updates that key
     function handleChange(event) {
@@ -26,32 +28,38 @@ function NewTripPage() {
 
     async function handleSubmit(event) {
         event.preventDefault();
+        setError(""); // clear previous error
 
         try {
             const response = await apiFetch("/api/trips", {
                 method: "POST",
                 body: JSON.stringify({
                     ...form,
-                    budget: parseFloat(form.budget), // convert string to number
+                    budget: parseFloat(form.budget),
                 }),
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error("Failed to create trip:", errorData.message);
+                setError(errorData.message || "Failed to create trip");
                 return;
             }
 
-            // success → go back to the trips list
             navigate("/trips");
-        } catch (error) {
-            console.error("Request failed:", error);
+        } catch (err) {
+            setError("Network error — is the backend running?");
         }
     }
 
     return (
         <div className="min-h-screen bg-zinc-900 px-6 py-8">
             <div className="max-w-2xl mx-auto">
+                <button
+                    onClick={() => navigate("/trips")}
+                    className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors mb-4"
+                >
+                    ← Back to trips
+                </button>
                 <h1 className="text-2xl font-bold text-zinc-100 mb-6">New Trip</h1>
 
                 <form
@@ -151,7 +159,11 @@ function NewTripPage() {
                             className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
                         />
                     </div>
-
+                    {error && (
+                        <p className="text-sm text-red-400 bg-red-950 border border-red-800 rounded-lg px-3 py-2">
+                            {error}
+                        </p>
+                    )}
                     <button
                         type="submit"
                         className="bg-zinc-100 hover:bg-white text-zinc-900 font-medium rounded-lg py-2 mt-2 self-start px-6 transition-colors"

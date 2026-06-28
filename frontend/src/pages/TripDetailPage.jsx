@@ -313,12 +313,11 @@ function TripDetailPage() {
             <div className="flex flex-col gap-1.5">
               <label className={labelCls}>Notes</label>
               <textarea
-                name="notes"
-                value={placeForm.notes}
-                onChange={handlePlaceChange}
-                rows={2}
-                placeholder="Optional notes…"
-                className={`${inputCls} resize-y`}
+                  name="notes"
+                  value={placeForm.notes}
+                  onChange={handlePlaceChange}
+                  rows={3}
+                  className={`${inputCls} resize-none`}
               />
             </div>
 

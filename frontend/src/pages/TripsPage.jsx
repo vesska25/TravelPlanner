@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import {
   flagUrl,
-  flagThumb,
   countryName,
   dateRange,
   money,
@@ -153,15 +152,6 @@ function TripsPage() {
                           "linear-gradient(160deg,rgba(255,255,255,0.08) 0%,rgba(15,42,51,0.5) 100%)",
                       }}
                     />
-                    {trip.country && (
-                      <span className="absolute top-3 left-3 flex items-center bg-white/90 p-[5px] rounded-lg">
-                        <img
-                          src={flagThumb(trip.country)}
-                          alt=""
-                          className="w-[22px] h-4 rounded-sm block"
-                        />
-                      </span>
-                    )}
                     <span
                       className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-bold tracking-wide"
                       style={{ background: st.bg, color: st.color }}

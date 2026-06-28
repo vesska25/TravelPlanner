@@ -70,37 +70,49 @@ function TripsPage() {
                         {trips.map((trip) => (
                             <div
                                 key={trip.id}
-                                className="bg-zinc-800 border border-zinc-700 rounded-xl p-5 flex flex-col gap-3 hover:border-zinc-500 transition-colors"
+                                className="relative overflow-hidden bg-zinc-800 border border-zinc-700 rounded-xl p-5 flex flex-col gap-3 hover:border-zinc-500 transition-colors"
                             >
-                                <Link to={`/trips/${trip.id}`} className="block">
-                                    <h2 className="text-lg font-semibold text-zinc-100 hover:underline">
-                                        {trip.name}
-                                    </h2>
-                                    <p className="text-sm text-zinc-400 mt-1">{trip.country}</p>
-                                </Link>
+                                {/* faint flag backdrop — only if a country is set */}
+                                {trip.country && (
+                                    <img
+                                        src={`https://flagcdn.com/w640/${trip.country.toLowerCase()}.png`}
+                                        alt=""
+                                        className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none"
+                                    />
+                                )}
 
-                                <div className="flex items-center gap-2 text-xs">
-                  <span className="bg-zinc-700 text-zinc-200 rounded-full px-2 py-1">
-                    {trip.status}
-                  </span>
-                                    <span className="text-zinc-400">
-                    {trip.budget} {trip.currency}
-                  </span>
-                                </div>
+                                {/* content sits above the flag */}
+                                <div className="relative flex flex-col gap-3">
+                                    <Link to={`/trips/${trip.id}`} className="block">
+                                        <h2 className="text-lg font-semibold text-zinc-100 hover:underline">
+                                            {trip.name}
+                                        </h2>
+                                        <p className="text-sm text-zinc-400 mt-1">{trip.country}</p>
+                                    </Link>
 
-                                <div className="flex gap-2 mt-auto pt-2">
-                                    <button
-                                        onClick={() => navigate(`/trips/${trip.id}/edit`)}
-                                        className="text-sm text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded-lg px-3 py-1 transition-colors"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(trip.id)}
-                                        className="text-sm text-red-400 hover:text-red-300 border border-zinc-700 hover:border-red-800 rounded-lg px-3 py-1 transition-colors"
-                                    >
-                                        Delete
-                                    </button>
+                                    <div className="flex items-center gap-2 text-xs">
+                    <span className="bg-zinc-700 text-zinc-200 rounded-full px-2 py-1">
+                      {trip.status}
+                    </span>
+                                        <span className="text-zinc-400">
+                      {trip.budget} {trip.currency}
+                    </span>
+                                    </div>
+
+                                    <div className="flex gap-2 mt-auto pt-2">
+                                        <button
+                                            onClick={() => navigate(`/trips/${trip.id}/edit`)}
+                                            className="text-sm text-zinc-300 hover:text-white border border-zinc-700 hover:border-zinc-500 rounded-lg px-3 py-1 transition-colors"
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(trip.id)}
+                                            className="text-sm text-red-400 hover:text-red-300 border border-zinc-700 hover:border-red-800 rounded-lg px-3 py-1 transition-colors"
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         ))}

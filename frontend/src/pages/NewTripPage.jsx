@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../api";
+import CountrySelect from "../components/CountrySelect";
 
 function NewTripPage() {
     const navigate = useNavigate();
@@ -78,11 +79,9 @@ function NewTripPage() {
 
                     <div className="flex flex-col gap-1">
                         <label className="text-sm font-medium text-zinc-300">Country</label>
-                        <input
-                            name="country"
+                        <CountrySelect
                             value={form.country}
-                            onChange={handleChange}
-                            className="bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                            onChange={(code) => setForm((prev) => ({ ...prev, country: code }))}
                         />
                     </div>
 

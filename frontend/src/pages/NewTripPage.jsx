@@ -16,7 +16,6 @@ function NewTripPage() {
     endDate: "",
     budget: "",
     currency: "EUR", // default dropdown value
-    status: "PLANNED", // default dropdown value
     description: "",
   });
 
@@ -141,19 +140,7 @@ function NewTripPage() {
                 <option value="CHF">CHF</option>
               </select>
             </div>
-            <div className="flex flex-col gap-1.5 flex-1 min-w-[130px]">
-              <label className={labelCls}>Status</label>
-              <select
-                name="status"
-                value={form.status}
-                onChange={handleChange}
-                className={inputCls}
-              >
-                <option value="PLANNED">Planned</option>
-                <option value="ONGOING">Ongoing</option>
-                <option value="COMPLETED">Completed</option>
-              </select>
-            </div>
+
           </div>
 
           <div className="flex flex-col gap-1.5">

@@ -16,7 +16,6 @@ function EditTripPage() {
     endDate: "",
     budget: "",
     currency: "EUR",
-    status: "PLANNED",
     description: "",
   });
 
@@ -39,7 +38,6 @@ function EditTripPage() {
         endDate: data.endDate,
         budget: data.budget,
         currency: data.currency,
-        status: data.status,
         description: data.description,
       });
     }
@@ -161,19 +159,7 @@ function EditTripPage() {
                 <option value="CHF">CHF</option>
               </select>
             </div>
-            <div className="flex flex-col gap-1.5 flex-1 min-w-[130px]">
-              <label className={labelCls}>Status</label>
-              <select
-                name="status"
-                value={form.status}
-                onChange={handleChange}
-                className={inputCls}
-              >
-                <option value="PLANNED">Planned</option>
-                <option value="ONGOING">Ongoing</option>
-                <option value="COMPLETED">Completed</option>
-              </select>
-            </div>
+
           </div>
 
           <div className="flex flex-col gap-1.5">

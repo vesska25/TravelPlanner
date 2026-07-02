@@ -7,6 +7,7 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -80,6 +81,16 @@ function RegisterPage() {
             Free, and takes less than a minute.
           </p>
 
+          <div className="flex flex-col gap-1.5">
+            <label className={labelCls}>Name</label>
+            <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                className={inputCls}
+                placeholder="Your name"
+            />
+          </div>
           <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
             <div className="flex flex-col gap-1.5">
               <label className={labelCls}>Email</label>

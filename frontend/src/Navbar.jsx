@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
+// Build initials from a full name: "Sergio Kovalenko" -> "SK", "Sergio" -> "S".
 function initialsFrom(name) {
     if (!name) return "";
     return name
@@ -15,7 +16,7 @@ function initialsFrom(name) {
 function Navbar() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
 
     // no token (login / register pages) → no navbar at all
     if (!token) {
@@ -23,7 +24,8 @@ function Navbar() {
     }
 
     function handleLogout() {
-        localStorage.removeItem("token");
+        localStorage.removeItem("token"); // drop the credential
+        setUser(null); // clear the shared user IMMEDIATELY, so no stale data lingers
         navigate("/login");
     }
 
@@ -57,10 +59,6 @@ function Navbar() {
             </div>
 
             <div className="ml-auto flex items-center gap-3.5">
-                <div className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-[10px] bg-[#f1f6f8] text-[#5b7785] text-[13px] w-40">
-                    <i className="ph ph-magnifying-glass" /> Search trips
-                </div>
-
                 {/* Profile button: avatar with the user's initials + their name. */}
                 <Link
                     to="/profile"

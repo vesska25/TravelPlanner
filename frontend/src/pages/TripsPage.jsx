@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiFetch } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 import {
   flagUrl,
@@ -16,6 +17,7 @@ function TripsPage() {
   const [loading, setLoading] = useState(true); // true until the first load finishes
   const [filter, setFilter] = useState("all");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // runs once, after the component first appears on screen
   useEffect(() => {
@@ -76,8 +78,13 @@ function TripsPage() {
         {/* header */}
         <div className="flex items-end justify-between gap-5">
           <div>
+            {user && (
+                <p className="text-[#2f93ab] font-semibold text-[20px] mb-1">
+                  Hi, {user.name} 👋
+                </p>
+            )}
             <h1 className="font-display text-[34px] font-extrabold tracking-tight text-[#143642]">
-              My Trips
+              Your Trips
             </h1>
             <p className="text-[#5b7785] text-[15px] mt-1.5">
               {trips.length} journeys · {upcoming} upcoming · {ongoing} on the road

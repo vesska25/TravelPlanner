@@ -64,6 +64,6 @@ public class AuthService {
 
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(user -> new UserResponse(user.getId(), user.getEmail(), user.getRole())).toList();
+                .map(user -> new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getRole())).toList();
     }
 }

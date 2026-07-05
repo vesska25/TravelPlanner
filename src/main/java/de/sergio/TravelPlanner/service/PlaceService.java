@@ -4,6 +4,7 @@ import de.sergio.TravelPlanner.entity.Place;
 import de.sergio.TravelPlanner.entity.Trip;
 import de.sergio.TravelPlanner.exception.ResourceNotFoundException;
 import de.sergio.TravelPlanner.repository.PlaceRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +60,12 @@ public class PlaceService {
     public void deletePlace(Long id) {
         Place place = getOwnedPlaceOrThrow(id);
         placeRepository.delete(place);
+    }
+
+    // Returns every place that belongs to the current user, across all their trips.
+    public List<Place> getCurrentUserPlaces() {
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return placeRepository.findByTripUserEmail(email);
     }
 }

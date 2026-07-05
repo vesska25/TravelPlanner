@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { apiFetch } from "../api";
 import CountrySelect from "../components/CountrySelect";
+import BackButton from "../components/BackButton";
 
 import { inputCls, labelCls, primaryBtn, ghostBtn } from "../lib/trip";
 
@@ -78,12 +79,7 @@ function EditTripPage() {
   return (
     <div className="min-h-screen bg-[#f5f9fb] px-6 py-8">
       <div className="max-w-[640px] mx-auto">
-        <button
-          onClick={() => navigate("/trips")}
-          className="inline-flex items-center gap-1.5 text-sm text-[#5b7785] hover:text-[#143642] transition-colors cursor-pointer"
-        >
-          <i className="ph ph-arrow-left" /> All trips
-        </button>
+        <BackButton />
         <h1 className="font-display text-[30px] font-extrabold tracking-tight mt-3.5 mb-1">
           Edit trip
         </h1>

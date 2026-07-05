@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
-// Build initials from a full name: "Sergio Kovalenko" -> "SK", "Sergio" -> "S".
+
 function initialsFrom(name) {
     if (!name) return "";
     return name
@@ -50,12 +50,12 @@ function Navbar() {
                 >
                     <i className="ph-bold ph-suitcase-rolling" /> Trips
                 </Link>
-                <span className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-[#5b7785] font-medium text-sm cursor-default">
-          <i className="ph ph-map-trifold" /> Map
-          <span className="text-[10px] font-semibold text-[#9a7b2f] bg-[#f3e7c6] px-1.5 py-0.5 rounded-md">
-            SOON
-          </span>
-        </span>
+                <Link
+                    to="/map"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-[#5b7785] hover:text-[#1f6f86] hover:bg-[#eaf4f7] font-medium text-sm transition-colors"
+                >
+                    <i className="ph ph-map-trifold" /> Map
+                </Link>
             </div>
 
             <div className="ml-auto flex items-center gap-3.5">

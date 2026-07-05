@@ -9,6 +9,7 @@ import EditTripPage from "./pages/EditTripPage";
 import TripDetailPage from "./pages/TripDetailPage";
 import Profile from "./pages/Profile";
 import { AuthProvider } from "./AuthContext";
+import AllPlacesMapPage from "./pages/AllPlacesMapPage";
 
 function App() {
     return (
@@ -54,6 +55,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <Profile />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/map"
+                        element={
+                            <ProtectedRoute>
+                                <AllPlacesMapPage />
                             </ProtectedRoute>
                         }
                     />

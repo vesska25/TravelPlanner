@@ -56,4 +56,12 @@ public class PlaceController {
     public void deletePlace(@PathVariable Long id) {
         placeService.deletePlace(id);
     }
+
+    @GetMapping("/api/places")
+    public List<PlaceResponse> getCurrentUserPlaces() {
+        return placeService.getCurrentUserPlaces()
+                .stream()
+                .map(placeMapper::toResponse)
+                .toList();
+    }
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { apiFetch } from "../api";
 import { useAuth } from "../AuthContext";
 import { inputCls, labelCls, primaryBtn, ghostBtn } from "../lib/trip";
+import BackButton from "../components/BackButton.jsx";
 
 export default function Profile() {
   // Read the shared user + the shared setter from context.
@@ -105,6 +106,7 @@ export default function Profile() {
 
   return (
       <div className="max-w-md mx-auto mt-10 px-4 space-y-6">
+        <BackButton />
         {/* ---------- Card 1: profile details ---------- */}
         <div className="rounded-2xl bg-white border border-[#d9e6ec] p-6 shadow-[0_6px_24px_rgba(20,54,66,0.06)]">
           <h1 className="text-2xl font-bold text-[#143642] mb-6">Profile</h1>

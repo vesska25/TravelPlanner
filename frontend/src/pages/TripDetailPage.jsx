@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { apiFetch } from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import TripMap from "../components/TripMap";
+import BackButton from "../components/BackButton";
 
 import {
   flagUrl,
@@ -206,12 +207,7 @@ function TripDetailPage() {
   return (
       <div className="min-h-screen bg-[#f5f9fb] px-6 py-7">
         <div className="max-w-[820px] mx-auto">
-          <button
-              onClick={() => navigate("/trips")}
-              className="inline-flex items-center gap-1.5 text-sm text-[#5b7785] hover:text-[#143642] transition-colors mb-4.5 cursor-pointer"
-          >
-            <i className="ph ph-arrow-left" /> All trips
-          </button>
+          <BackButton />
 
           {/* hero banner — country flag */}
           <div className="relative rounded-[20px] overflow-hidden bg-[#dfeaee] h-[200px] flex items-end p-6">
@@ -219,7 +215,7 @@ function TripDetailPage() {
                 <img
                     src={flagUrl(trip.country)}
                     alt=""
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover object-center"
                 />
             )}
             <div

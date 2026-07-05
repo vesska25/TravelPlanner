@@ -48,9 +48,7 @@ public class PlaceService {
         Place existing = getOwnedPlaceOrThrow(id);
 
         existing.setName(place.getName());
-        existing.setCity(place.getCity());
         existing.setCategory(place.getCategory());
-        existing.setNotes(place.getNotes());
         existing.setVisited(place.isVisited());
         existing.setLatitude(place.getLatitude());
         existing.setLongitude(place.getLongitude());

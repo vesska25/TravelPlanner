@@ -6,8 +6,6 @@ public record PlaceResponse(
         Long id,
         String name,
         PlaceCategory category,
-        String city,
-        String notes,
         boolean visited,
         Double latitude,
         Double longitude,

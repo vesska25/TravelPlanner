@@ -15,8 +15,6 @@ public class PlaceMapper {
                 place.getId(),
                 place.getName(),
                 place.getCategory(),
-                place.getCity(),
-                place.getNotes(),
                 place.isVisited(),
                 place.getLatitude(),
                 place.getLongitude(),
@@ -29,9 +27,7 @@ public class PlaceMapper {
         Place place = new Place();
 
         place.setName(request.name());
-        place.setCity(request.city());
         place.setCategory(request.category());
-        place.setNotes(request.notes());
         place.setVisited(request.visited() != null ? request.visited() : false);
         place.setLatitude(request.latitude());
         place.setLongitude(request.longitude());

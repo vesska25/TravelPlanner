@@ -27,12 +27,8 @@ public class Place {
 
     private String name;
 
-    private String city;
-
     @Enumerated(EnumType.STRING)
     private PlaceCategory category;
-
-    private String notes;
 
     private boolean visited = false;
 

@@ -425,16 +425,6 @@ function TripDetailPage() {
                     <option value="OTHER">Other</option>
                   </select>
                 </div>
-                <label className="flex items-center gap-2 text-sm text-[#143642] pb-2.5 cursor-pointer">
-                  <input
-                      type="checkbox"
-                      name="visited"
-                      checked={placeForm.visited}
-                      onChange={handlePlaceChange}
-                      className="w-[17px] h-[17px] accent-[#2f93ab]"
-                  />
-                  Already visited
-                </label>
               </div>
 
               <button

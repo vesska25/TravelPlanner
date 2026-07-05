@@ -8,14 +8,8 @@ public record PlaceRequest(
         @NotBlank
         String name,
 
-        @NotBlank
-        String city,
-
         @NotNull
         PlaceCategory category,
-
-        @Size(max = 500)
-        String notes,
 
         Boolean visited,
 

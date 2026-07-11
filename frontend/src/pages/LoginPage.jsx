@@ -46,8 +46,6 @@ function LoginPage() {
       localStorage.setItem("token", data.token);
 
       // Step 2 — now that we have a token, fetch WHO just logged in and fill the pipe.
-      // Without this, AuthContext would still hold the previous user (its startup
-      // useEffect already ran and won't re-run without a page reload).
       const meRes = await fetch("http://localhost:8080/api/users/me", {
         headers: { Authorization: `Bearer ${data.token}` },
       });
@@ -88,9 +86,17 @@ function LoginPage() {
               one calm, bright place.
             </p>
           </div>
-          <span className="relative font-mono text-[11px] tracking-[0.2em] opacity-70">
-          TRAVEL PLANNER
-        </span>
+          <div className="relative font-mono text-[11px] tracking-[0.15em] opacity-70 leading-relaxed">
+            <p>A learning project by Sergei Savich</p>
+            <a
+                href="https://github.com/vesska25/TravelPlanner"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-100 hover:underline transition-opacity"
+            >
+              github.com/vesska25/TravelPlanner
+            </a>
+          </div>
         </div>
 
         {/* form panel */}

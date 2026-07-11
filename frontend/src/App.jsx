@@ -10,6 +10,7 @@ import TripDetailPage from "./pages/TripDetailPage";
 import Profile from "./pages/Profile";
 import { AuthProvider } from "./AuthContext";
 import AllPlacesMapPage from "./pages/AllPlacesMapPage";
+import Footer from "./Footer";
 
 function App() {
     return (
@@ -68,6 +69,7 @@ function App() {
                     />
                     <Route path="/register" element={<RegisterPage />} />
                 </Routes>
+                <Footer />
             </AuthProvider>
         </BrowserRouter>
     );

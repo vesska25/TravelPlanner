@@ -15,6 +15,19 @@ function LoginPage() {
     event.preventDefault();
     setError(null);
 
+    if (!email.trim() && !password) {
+      setError("Please enter your email and password.");
+      return;
+    }
+    if (!email.trim()) {
+      setError("Please enter your email.");
+      return;
+    }
+    if (!password) {
+      setError("Please enter your password.");
+      return;
+    }
+
     try {
       // Step 1 — exchange credentials for a token.
       const response = await fetch("http://localhost:8080/api/auth/login", {

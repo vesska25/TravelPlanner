@@ -20,18 +20,23 @@ function TripsPage() {
   const [search, setSearch] = useState(""); // text typed into the search box
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [error, setError] = useState(null);
 
   // runs once, after the component first appears on screen
   useEffect(() => {
     async function loadTrips() {
       try {
         const response = await apiFetch("/api/trips");
+        // fetch doesn't throw on HTTP errors (500, 404) — check explicitly.
+        if (!response.ok) {
+          throw new Error("Couldn't load your trips. Please try again.");
+        }
         const data = await response.json();
         setTrips(data);
-      } catch (error) {
-        console.error("Failed to load trips:", error);
+      } catch (err) {
+        setError(err.message || "Something went wrong loading your trips.");
       } finally {
-        setLoading(false); // stop loading no matter what
+        setLoading(false);
       }
     }
 
@@ -51,7 +56,7 @@ function TripsPage() {
       });
 
       if (!response.ok) {
-        console.error("Failed to delete trip");
+        alert("Couldn't delete the trip. Please try again.");
         return;
       }
 
@@ -160,6 +165,10 @@ function TripsPage() {
           {/* body */}
           {loading ? (
               <p className="text-[#5b7785] mt-8">Loading trips…</p>
+          ) : error ? (
+              <div className="mt-8 bg-[#fbeeec] border border-[#f3d6d1] text-[#b25c4e] rounded-xl px-4 py-3 text-sm">
+                {error}
+              </div>
           ) : visible.length === 0 ? (
               <div className="mt-10 text-center px-5 py-14 bg-white border border-dashed border-[#cfe0e7] rounded-[18px]">
                 <div className="w-14 h-14 rounded-2xl bg-[#eaf4f7] text-[#2f93ab] flex items-center justify-center text-[28px] mx-auto mb-4">

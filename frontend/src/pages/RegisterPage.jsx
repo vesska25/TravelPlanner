@@ -23,6 +23,15 @@ function RegisterPage() {
     event.preventDefault();
     setError("");
 
+    if (!form.name.trim() || !form.email.trim() || !form.password || !form.confirmPassword) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords don't match.");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:8080/api/auth/register", {
         method: "POST",
@@ -31,14 +40,14 @@ function RegisterPage() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message);
+        const errorData = await response.json().catch(() => ({}));
+        setError(errorData.message ?? "Registration failed. Please try again.");
         return;
       }
 
       navigate("/login");
     } catch (err) {
-      setError("Network error — is the backend running?");
+      setError("Something went wrong. Please try again.");
     }
   }
 

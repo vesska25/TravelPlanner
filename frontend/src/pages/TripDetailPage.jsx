@@ -38,6 +38,7 @@ function TripDetailPage() {
   const [locationQuery, setLocationQuery] = useState("");
   const [results, setResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [error, setError] = useState(null);
 
   function handlePlaceChange(event) {
     const { name, value, type, checked } = event.target;
@@ -95,8 +96,8 @@ function TripDetailPage() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Failed to add place:", errorData.message);
+        const errorData = await response.json().catch(() => ({}));
+        alert(errorData.message ?? "Couldn't add the place. Please try again.");
         return;
       }
 
@@ -114,7 +115,7 @@ function TripDetailPage() {
       setLocationQuery("");
       setResults([]);
     } catch (error) {
-      console.error("Request failed:", error);
+      alert("Couldn't add the place. Please try again.");
     }
   }
 
@@ -165,31 +166,45 @@ function TripDetailPage() {
       });
 
       if (!response.ok) {
-        console.error("Failed to delete place");
+        alert("Couldn't delete the place. Please try again.");
         return;
       }
 
       setPlaces((prev) => prev.filter((place) => place.id !== placeId));
     } catch (error) {
-      console.error("Request failed:", error);
+      alert("Couldn't delete the place. Please try again.");
     }
   }
 
   useEffect(() => {
     async function loadData() {
-      const tripResponse = await apiFetch(`/api/trips/${id}`);
-      if (tripResponse.ok) {
+      try {
+        const tripResponse = await apiFetch(`/api/trips/${id}`);
+        if (!tripResponse.ok) {
+          throw new Error("Couldn't load this trip.");
+        }
         setTrip(await tripResponse.json());
-      }
 
-      const placesResponse = await apiFetch(`/api/trips/${id}/places`);
-      if (placesResponse.ok) {
-        setPlaces(await placesResponse.json());
+        const placesResponse = await apiFetch(`/api/trips/${id}/places`);
+        if (placesResponse.ok) {
+          setPlaces(await placesResponse.json());
+        }
+      } catch (err) {
+        setError(err.message || "Couldn't load this trip.");
       }
     }
 
     loadData();
   }, [id]);
+
+  if (error) {
+    return (
+        <div className="min-h-screen bg-[#f5f9fb] flex flex-col items-center justify-center gap-4">
+          <p className="text-[#b25c4e]">{error}</p>
+          <BackButton />
+        </div>
+    );
+  }
 
   if (!trip) {
     return (

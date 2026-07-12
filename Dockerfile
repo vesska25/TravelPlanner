@@ -5,6 +5,7 @@ WORKDIR /app
 # Сначала копируем только файлы, нужные для скачивания зависимостей
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
+RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B
 
 # Только теперь копируем исходный код и компилируем

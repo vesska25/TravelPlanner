@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16
+    container_name: travelplanner-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - travelplanner-net
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: travelplanner-backend
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "127.0.0.1:8081:8080"
+    networks:
+      - travelplanner-net
+    deploy:
+      resources:
+        limits:
+          memory: 600M
+
+networks:
+  travelplanner-net:
+    driver: bridge
+
+volumes:
+  pgdata:

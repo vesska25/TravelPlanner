@@ -1,4 +1,3 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TripsPage from "./pages/TripsPage";
 import ProtectedRoute from "./ProtectedRoute";
@@ -11,6 +10,7 @@ import Profile from "./pages/Profile";
 import { AuthProvider } from "./AuthContext";
 import AllPlacesMapPage from "./pages/AllPlacesMapPage";
 import Footer from "./Footer";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
     return (
@@ -18,6 +18,7 @@ function App() {
             <AuthProvider>
                 <Navbar />
                 <Routes>
+                    <Route path="/" element={<Navigate to="/trips" replace />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route
                         path="/trips"
@@ -68,6 +69,7 @@ function App() {
                         }
                     />
                     <Route path="/register" element={<RegisterPage />} />
+                    <Route path="*" element={<Navigate to="/trips" replace />} />
                 </Routes>
                 <Footer />
             </AuthProvider>

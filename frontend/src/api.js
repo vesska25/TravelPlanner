@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = import.meta.env.VITE_API_URL || "";
 
 // Wrapper around fetch that automatically attaches the JWT.
 // path: e.g. "/api/trips"   options: same object you'd pass to fetch
@@ -7,10 +7,9 @@ export async function apiFetch(path, options = {}) {
 
     const headers = {
         "Content-Type": "application/json",
-        ...options.headers, // keep any headers the caller passed
+        ...options.headers,
     };
 
-    // attach the token only if we have one
     if (token) {
         headers["Authorization"] = `Bearer ${token}`;
     }

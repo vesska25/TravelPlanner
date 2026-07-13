@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { apiFetch } from "../api";
 import { inputCls, labelCls, primaryBtn } from "../lib/trip";
 
 function RegisterPage() {
@@ -33,9 +33,8 @@ function RegisterPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/register", {
+      const response = await apiFetch("/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 

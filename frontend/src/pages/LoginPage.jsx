@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import { apiFetch } from "../api";
 
 import { inputCls, labelCls, primaryBtn } from "../lib/trip";
 
@@ -30,9 +31,8 @@ function LoginPage() {
 
     try {
       // Step 1 — exchange credentials for a token.
-      const response = await fetch("http://localhost:8080/api/auth/login", {
+      const response = await apiFetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -46,12 +46,10 @@ function LoginPage() {
       localStorage.setItem("token", data.token);
 
       // Step 2 — now that we have a token, fetch WHO just logged in and fill the pipe.
-      const meRes = await fetch("http://localhost:8080/api/users/me", {
-        headers: { Authorization: `Bearer ${data.token}` },
-      });
+      const meRes = await apiFetch("/api/users/me");
       if (meRes.ok) {
         const me = await meRes.json();
-        setUser(me); // navbar + profile now show the correct, fresh user
+        setUser(me);
       }
 
       navigate("/trips");
@@ -103,7 +101,7 @@ function LoginPage() {
         <div className="flex-1 flex items-center justify-center p-10 bg-[#f5f9fb]">
           <div className="w-full max-w-[360px]">
             <h1 className="font-display text-[28px] font-extrabold tracking-tight mb-1.5">
-              Welcome back
+              Welcome
             </h1>
             <p className="text-[#5b7785] text-[15px] mb-7">
               Log in to keep planning your trips.

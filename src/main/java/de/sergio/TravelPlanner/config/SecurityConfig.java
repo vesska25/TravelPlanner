@@ -55,7 +55,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         // which frontend origins may call this API
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "https://travel-planner.mimosa-dev.de"
+        ));
         // OPTIONS is required so the browser's preflight request is allowed
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         // allow all request headers (includes Authorization and Content-Type)
